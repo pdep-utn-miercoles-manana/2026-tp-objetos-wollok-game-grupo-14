@@ -1,0 +1,209 @@
+import wollok.game.*
+// cd "C:\Users\sol\Downloads\pruebaJuego\juego-gatito"
+// wollok run "src.juego.carreraDeGatitos" --port 4200 -p "." -a "assets"
+program carreraDeGatitos {
+    game.width(100)
+    game.height(71)
+    game.cellSize(20)
+    game.title("Carrera de gatitos")
+    
+    juego.iniciar()
+
+    game.start()
+    game.addVisualCharacter(gatito)
+
+}
+
+object juego {
+    var nivelActual = nivel3
+    var estado = true
+
+    method iniciar() {
+        estado = true
+        nivelActual.iniciar()
+    }
+
+    method ganar() {
+        estado = false
+    }
+    method perder() {
+        estado = false
+    }
+
+    method verificarMeta() {
+        nivelActual.verificarMeta()
+    }
+
+    method avanzarNivel() {
+        if(nivelActual == nivel1) {
+            nivelActual = nivel2
+            self.iniciar()
+        }
+        else if (nivelActual == nivel2) {
+            nivelActual = nivel3
+            self.iniciar()
+        }
+        else {
+            self.ganar()
+        }
+    }
+
+    method esTransitable(posicion) {
+        return nivelActual.esTransitable(posicion)
+    }
+
+}
+
+class Nivel {
+    const fondo
+    var completado = false
+    const posicionInicial
+    const posicionFinal
+    const tramos
+
+    method iniciar() {
+        completado = false
+        self.configurarFondo()
+        gatito.irA(posicionInicial)
+    }
+
+    method configurarFondo() {
+        game.boardGround(fondo)
+    }
+
+    method verificarMeta() {
+        if(game.onSameCell(gatito.position(), posicionFinal)) {
+            self.completar()
+        }
+    }
+    
+    method completar() {
+        completado = true
+        juego.avanzarNivel()
+    }
+
+    method esTransitable(posicion) {
+        return tramos.any {tramo => tramo.contiene(posicion)}
+    }
+
+}
+
+const nivel1 = new Nivel (
+    fondo = "Fondo1.jpg",
+    posicionInicial = game.at(1, 36),
+    posicionFinal = game.at(99, 35),
+    tramos = #{tramo1Nivel1, tramo2Nivel1, tramo3Nivel1, tramo4Nivel1, tramo5Nivel1, tramo6Nivel1}
+)
+
+const nivel2 = new Nivel (
+    fondo = "Fondo2.jpg",
+    posicionInicial = game.at(1, 21),
+    posicionFinal = game.at(99, 55),
+    tramos = #{tramo1Nivel2, tramo2Nivel2, tramo3Nivel2, tramo4Nivel2}
+)
+
+const nivel3 = new Nivel (
+    fondo = "Fondo3.jpg",
+    posicionInicial = game.at(20, 4),
+    posicionFinal = game.at(20,20),
+    tramos = #{}
+)
+
+
+object gatito {
+    var ubicacion = game.origin()
+    method position() = ubicacion
+    method image() = "gatito.png"
+
+    method irA(posicionInicial) {
+        ubicacion = posicionInicial
+    }
+
+    method position(nuevaPosicion) {
+        if(juego.esTransitable(nuevaPosicion)) {
+            ubicacion = nuevaPosicion
+            juego.verificarMeta()
+        }
+    }
+
+}
+
+class TramoHorizontal {
+    const y
+    const xInicial
+    const xFinal
+
+    method contiene(posicion) {
+        return posicion.y() == y && posicion.x() >= xInicial && posicion.x() <= xFinal
+    }
+}
+
+class TramoVertical {
+    const x
+    const yInicial
+    const yFinal
+
+    method contiene(posicion) {
+        return posicion.x() == x && posicion.y() >= yInicial && posicion.y() <= yFinal
+    }
+}
+
+const tramo1Nivel1 = new TramoHorizontal (
+    y = 36,
+    xInicial = 1,
+    xFinal = 40
+)
+
+const tramo2Nivel1 = new TramoVertical (
+    x = 40,
+    yInicial = 21,
+    yFinal = 51
+)
+
+const tramo3Nivel1 = new TramoHorizontal (
+    y = 21,
+    xInicial = 40,
+    xFinal = 71
+)
+
+const tramo4Nivel1 = new TramoHorizontal (
+    y = 51,
+    xInicial = 40,
+    xFinal = 71
+)
+
+const tramo5Nivel1 = new TramoVertical (
+    x = 71,
+    yInicial = 21,
+    yFinal = 51
+)
+
+const tramo6Nivel1 = new TramoHorizontal (
+    y = 35,
+    xInicial = 40,
+    xFinal = 99
+)
+
+const tramo1Nivel2 = new TramoHorizontal (
+    y = 21,
+    xInicial = 1,
+    xFinal = 89
+)
+
+const tramo2Nivel2 = new TramoVertical (
+    x = 19,
+    yInicial = 21,
+    yFinal = 55
+)
+
+const tramo3Nivel2 = new TramoVertical (
+    x = 89,
+    yInicial = 21,
+    yFinal = 55
+)
+
+const tramo4Nivel2 = new TramoHorizontal (
+    y = 55,
+    xInicial = 19,
+    xFinal = 99
+)
