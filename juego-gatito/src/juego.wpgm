@@ -1,20 +1,41 @@
 import wollok.game.*
-// cd "C:\Users\sol\Downloads\pruebaJuego\juego-gatito"
 // wollok run "src.juego.carreraDeGatitos" --port 4200 -p "." -a "assets"
+
+
 program carreraDeGatitos {
     game.width(100)
     game.height(71)
     game.cellSize(20)
     game.title("Carrera de gatitos")
-    
+
     juego.iniciar()
 
     game.addVisualCharacter(puenteNivel1)
     game.onTick(1000, "moverPuente", {
     puenteNivel1.mover()
     })
-    game.addVisualCharacter(gatito)
-    
+    game.addVisual(gatito)
+
+    // Movimiento hacia arriba
+    keyboard.up().whilePressedDo({
+        gatito.position(gatito.position().up(1))
+    }, 100)
+
+    // Movimiento hacia abajo
+    keyboard.down().whilePressedDo({
+        gatito.position(gatito.position().down(1))
+    }, 100)
+
+    // Movimiento hacia la izquierda
+    keyboard.left().whilePressedDo({
+        gatito.position(gatito.position().left(1))
+    }, 100)
+
+    // Movimiento hacia la derecha
+    keyboard.right().whilePressedDo({
+        gatito.position(gatito.position().right(1))
+    }, 100)
+
     game.start()
 }
 
@@ -237,17 +258,26 @@ object lagoNivel1 {
         return posicion.x() >=51 && posicion.x() <=61 && posicion.y() == 51
     }
     method afectarGatito() {
-        if(self.zonaPeligrosa(gatito.position()) && !puenteNivel1.estaSobreElLago(gatito.position())) {
+        if(self.zonaPeligrosa(gatito.position()) && !puenteNivel1.permiteCruzar(gatito.position())) {
         game.say(gatito, "Perdí!!")
         }
     }
 }
 
-object puenteNivel1 {
+class Puente {
+    const xVisual
+    const xInicioLago
+    const xFinLago
+    const yCamino
+    const yMinimo
+    const yMaximo
+    const yMinimoCruce
+    const yMaximoCruce
+
     var posicionY = 46
     var subiendo = true
 
-    method position() = game.at(53, posicionY)
+    method position() = game.at(xVisual, posicionY)
 
     method position(nuevaPosicion) {
         posicionY = nuevaPosicion.y()
@@ -263,19 +293,31 @@ object puenteNivel1 {
             posicionY -= 1
         }
 
-        if (posicionY >= 51) {
+        if (posicionY >= yMaximo) {
             subiendo = false
         }
-        if (posicionY <= 46) {
+
+        if (posicionY <= yMinimo) {
             subiendo = true
         }
     }
 
-    method estaSobreElLago(posicion) {
-        return posicion.x() >= 51 &&
-            posicion.x() <= 61 &&
-            posicion.y() == 51 &&
-            posicionY >= 49 &&
-            posicionY <= 51    
+    method permiteCruzar(posicion) {
+        return posicion.x() >= xInicioLago &&
+            posicion.x() <= xFinLago &&
+            posicion.y() == yCamino &&
+            posicionY >= yMinimoCruce &&
+            posicionY <= yMaximoCruce
     }
 }
+
+const puenteNivel1 = new Puente(
+    xVisual = 53,
+    xInicioLago = 51,
+    xFinLago = 61,
+    yCamino = 51,
+    yMinimo = 46,
+    yMaximo = 51,
+    yMinimoCruce = 49,
+    yMaximoCruce = 51
+)
