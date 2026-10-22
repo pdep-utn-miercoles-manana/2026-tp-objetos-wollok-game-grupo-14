@@ -9,13 +9,17 @@ program carreraDeGatitos {
     
     juego.iniciar()
 
-    game.start()
+    game.addVisualCharacter(puenteNivel1)
+    game.onTick(1000, "moverPuente", {
+    puenteNivel1.mover()
+    })
     game.addVisualCharacter(gatito)
-
+    
+    game.start()
 }
 
 object juego {
-    var nivelActual = nivel3
+    var nivelActual = nivel1
     var estado = true
 
     method iniciar() {
@@ -46,10 +50,15 @@ object juego {
         else {
             self.ganar()
         }
+        
     }
 
     method esTransitable(posicion) {
         return nivelActual.esTransitable(posicion)
+    }
+
+    method verificarObstaculos() {
+        nivelActual.obstaculos().forEach {obstaculo => obstaculo.afectarGatito()}
     }
 
 }
@@ -60,6 +69,9 @@ class Nivel {
     const posicionInicial
     const posicionFinal
     const tramos
+    const obstaculos
+
+    method obstaculos() = obstaculos
 
     method iniciar() {
         completado = false
@@ -92,21 +104,24 @@ const nivel1 = new Nivel (
     fondo = "Fondo1.jpg",
     posicionInicial = game.at(1, 36),
     posicionFinal = game.at(99, 35),
-    tramos = #{tramo1Nivel1, tramo2Nivel1, tramo3Nivel1, tramo4Nivel1, tramo5Nivel1, tramo6Nivel1}
+    tramos = #{tramo1Nivel1, tramo2Nivel1, tramo3Nivel1, tramo4Nivel1, tramo5Nivel1, tramo6Nivel1},
+    obstaculos = #{lagoNivel1}
 )
 
 const nivel2 = new Nivel (
     fondo = "Fondo2.jpg",
     posicionInicial = game.at(1, 21),
     posicionFinal = game.at(99, 55),
-    tramos = #{tramo1Nivel2, tramo2Nivel2, tramo3Nivel2, tramo4Nivel2}
+    tramos = #{tramo1Nivel2, tramo2Nivel2, tramo3Nivel2, tramo4Nivel2},
+    obstaculos = #{}
 )
 
 const nivel3 = new Nivel (
     fondo = "Fondo3.jpg",
     posicionInicial = game.at(20, 4),
     posicionFinal = game.at(20,20),
-    tramos = #{}
+    tramos = #{},
+    obstaculos = #{}
 )
 
 
@@ -123,6 +138,7 @@ object gatito {
         if(juego.esTransitable(nuevaPosicion)) {
             ubicacion = nuevaPosicion
             juego.verificarMeta()
+            juego.verificarObstaculos()
         }
     }
 
@@ -207,3 +223,59 @@ const tramo4Nivel2 = new TramoHorizontal (
     xInicial = 19,
     xFinal = 99
 )
+
+// class ElementoEscenario {
+//     const posicion
+//     const imagen
+//     method position() = posicion
+//     method image() = imagen
+//     method afectarGatito() {}
+// }
+
+object lagoNivel1 {
+    method zonaPeligrosa(posicion) {
+        return posicion.x() >=51 && posicion.x() <=61 && posicion.y() == 51
+    }
+    method afectarGatito() {
+        if(self.zonaPeligrosa(gatito.position()) && !puenteNivel1.estaSobreElLago(gatito.position())) {
+        game.say(gatito, "Perdí!!")
+        }
+    }
+}
+
+object puenteNivel1 {
+    var posicionY = 46
+    var subiendo = true
+
+    method position() = game.at(53, posicionY)
+
+    method position(nuevaPosicion) {
+        posicionY = nuevaPosicion.y()
+    }
+
+    method image() = "puenteGrande.png"
+
+    method mover() {
+        if (subiendo) {
+            posicionY += 1
+        }
+        else {
+            posicionY -= 1
+        }
+
+        if (posicionY >= 51) {
+            subiendo = false
+        }
+        if (posicionY <= 46) {
+            subiendo = true
+        }
+    }
+
+    method estaSobreElLago(posicion) {
+        return posicion.x() >= 51 &&
+            posicion.x() <= 61 &&
+            posicion.y() == 51 &&
+            posicionY >= 49 &&
+            posicionY <= 51    
+    }
+}
