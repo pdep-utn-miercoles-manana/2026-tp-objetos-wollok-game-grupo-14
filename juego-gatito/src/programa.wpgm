@@ -1,0 +1,49 @@
+import wollok.game.*
+import gatito.*
+import juego.*
+import lago.*
+import nivel.*
+import ovillo.*
+import pescadito.*
+import puente.*
+import tramo.*
+// wollok run "src.juego.carreraDeGatitos" --port 4200 -p "." -a "assets"
+
+
+program carreraDeGatitos {
+    game.width(100)
+    game.height(71)
+    game.cellSize(20)
+    game.title("Carrera de gatitos")
+
+    juego.iniciar()
+
+    
+    game.onTick(1000, "moverPuente", {
+        juego.moverPuentes()
+    })
+
+    game.addVisual(gatito)
+
+    // Movimiento hacia arriba
+    keyboard.up().whilePressedDo({
+        gatito.position(gatito.position().up(1))
+    }, 100)
+
+    // Movimiento hacia abajo
+    keyboard.down().whilePressedDo({
+        gatito.position(gatito.position().down(1))
+    }, 100)
+
+    // Movimiento hacia la izquierda
+    keyboard.left().whilePressedDo({
+        gatito.position(gatito.position().left(1))
+    }, 100)
+
+    // Movimiento hacia la derecha
+    keyboard.right().whilePressedDo({
+        gatito.position(gatito.position().right(1))
+    }, 100)
+
+    game.start()
+}
