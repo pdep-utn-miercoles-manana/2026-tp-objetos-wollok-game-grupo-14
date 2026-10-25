@@ -60,7 +60,7 @@ const nivel1 = new Nivel (
     posicionInicial = game.at(1, 36),
     posicionFinal = game.at(99, 35),
     tramos = #{tramo1Nivel1, tramo2Nivel1, tramo3Nivel1, tramo4Nivel1, tramo5Nivel1, tramo6Nivel1},
-    obstaculos = #{lago1Nivel1, lago2Nivel1},
+    obstaculos = #{lago1Nivel1, lago2Nivel1,ovillo1Nivel1},
     puentes = #{puente1Nivel1, puente2Nivel1}
 )
 
