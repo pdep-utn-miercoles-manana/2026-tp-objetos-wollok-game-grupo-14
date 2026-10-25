@@ -3,6 +3,7 @@ import juego.*
 import tramo.*
 import lago.*
 import puente.*
+import ovillo.*
 class Nivel {
     const fondo
     var completado = false
@@ -11,6 +12,7 @@ class Nivel {
     const tramos
     const obstaculos
     const puentes
+    const ovillos
 
     method obstaculos() = obstaculos
 
