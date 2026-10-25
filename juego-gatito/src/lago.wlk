@@ -74,10 +74,58 @@ const lago4Nivel2 = new Lago (
     puente = puente4Nivel2
 )
 
-// const lago1Nivel3 = new Lago (
-//     xInicio = 9,
-//     xFin = 16,
-//     yInicio = 55,
-//     yFin = 55,
-//     puente = puente1Nivel3
-// )
+const lago1Nivel3 = new Lago (
+    xInicio = 9,
+    xFin = 16,
+    yInicio = 51,
+    yFin = 51,
+    puente = puente1Nivel3
+)
+
+const lago2Nivel3 = new Lago (
+    xInicio = 9,
+    xFin = 16,
+    yInicio = 3,
+    yFin = 3,
+    puente = puente2Nivel3
+)
+
+const lago3Nivel3 = new Lago (
+    xInicio = 77,
+    xFin = 84,
+    yInicio = 63,
+    yFin = 63,
+    puente = puente3Nivel3
+)
+
+const lago4Nivel3 = new Lago (
+    xInicio = 77,
+    xFin = 84,
+    yInicio = 52,
+    yFin = 52,
+    puente = puente4Nivel3
+)
+
+const lago5Nivel3 = new Lago (
+    xInicio = 77,
+    xFin = 84,
+    yInicio = 3,
+    yFin = 3,
+    puente = puente5Nivel3
+)
+
+const lago6Nivel3 = new Lago (
+    xInicio = 27,
+    xFin = 27,
+    yInicio = 17,
+    yFin = 21,
+    puente = puente6Nivel3
+)
+
+const lago7Nivel3 = new Lago (
+    xInicio = 38,
+    xFin = 38,
+    yInicio = 17,
+    yFin = 21,
+    puente = puente7Nivel3
+)

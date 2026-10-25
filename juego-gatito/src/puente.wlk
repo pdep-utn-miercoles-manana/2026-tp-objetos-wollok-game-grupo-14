@@ -97,8 +97,8 @@ const puente1Nivel2 = new PuenteHorizontal (
     posicionMaxima = 25,
     posicionMovil = 19,
     ejeY = 42,
-    extremoSuperiorPuente = 38,
-    extremoInferiorPuente = 48,
+    extremoSuperiorPuente = 48,
+    extremoInferiorPuente = 38,
     xInferiorCruce = 15,
     xSuperiorCruce = 22 
 )
@@ -139,14 +139,86 @@ const puente4Nivel2 = new PuenteVertical (
     ySuperiorCruce = 59
 )
 
-// const puente1Nivel3 = new PuenteVertical (
-//     imagen = "puenteGrandeVertical.png",
-//     posicionMinima = 3,
-//     posicionMaxima = 56,
-//     posicionMovil = 55,
-//     ejeX = 10,
-//     extremoIzquierdoPuente = 9,
-//     extremoDerechoPuente = 14,
-//     yInferiorCruce = 52,
-//     ySuperiorCruce = 57
-// )
+const puente1Nivel3 = new PuenteVertical (
+    imagen = "puenteGrandeVertical.png",
+    posicionMinima = 42,
+    posicionMaxima = 56,
+    posicionMovil = 51,
+    ejeX = 10,
+    extremoIzquierdoPuente = 8,
+    extremoDerechoPuente = 16,
+    yInferiorCruce = 47,
+    ySuperiorCruce = 54
+)
+
+const puente2Nivel3 = new PuenteVertical (
+    imagen = "puenteGrandeVertical.png",
+    posicionMinima = 1,
+    posicionMaxima = 13,
+    posicionMovil = 3,
+    ejeX = 10,
+    extremoIzquierdoPuente = 8,
+    extremoDerechoPuente = 16,
+    yInferiorCruce = 1,
+    ySuperiorCruce = 6
+)
+
+const puente3Nivel3 = new PuenteVertical (
+    imagen = "puenteGrandeVertical.png",
+    posicionMinima = 58,
+    posicionMaxima = 68,
+    posicionMovil = 63,
+    ejeX = 77,
+    extremoIzquierdoPuente = 74,
+    extremoDerechoPuente = 84,
+    yInferiorCruce = 60,
+    ySuperiorCruce = 66
+)
+
+const puente4Nivel3 = new PuenteVertical (
+    imagen = "puenteGrandeVertical.png",
+    posicionMinima = 40,
+    posicionMaxima = 54,
+    posicionMovil = 52,
+    ejeX = 77,
+    extremoIzquierdoPuente = 74,
+    extremoDerechoPuente = 84,
+    yInferiorCruce = 49,
+    ySuperiorCruce = 53
+)
+
+const puente5Nivel3 = new PuenteVertical (
+    imagen = "puenteGrandeVertical.png",
+    posicionMinima = 1,
+    posicionMaxima = 13,
+    posicionMovil = 3,
+    ejeX = 77,
+    extremoIzquierdoPuente = 74,
+    extremoDerechoPuente = 84,
+    yInferiorCruce = 1,
+    ySuperiorCruce = 6
+)
+
+const puente6Nivel3 = new PuenteHorizontal (
+    imagen = "puenteGrandeHorizontal.png",
+    posicionMinima = 22,
+    posicionMaxima = 30,
+    posicionMovil = 27,
+    ejeY = 17,
+    extremoSuperiorPuente = 21,
+    extremoInferiorPuente = 14,
+    xInferiorCruce = 24,
+    xSuperiorCruce = 29
+)
+
+const puente7Nivel3 = new PuenteHorizontal (
+    imagen = "puenteGrandeHorizontal.png",
+    posicionMinima = 33,
+    posicionMaxima = 45,
+    posicionMovil = 38,
+    ejeY = 17,
+    extremoSuperiorPuente = 21,
+    extremoInferiorPuente = 14,
+    xInferiorCruce = 35,
+    xSuperiorCruce = 41
+)

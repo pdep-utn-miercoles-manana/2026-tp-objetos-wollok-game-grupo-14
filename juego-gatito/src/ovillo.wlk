@@ -41,7 +41,6 @@ object gatitoCongelado {
 
 object estaCongelado {
     var congelado = false
-
     method estaCongelado() = congelado
 
     method congelar() {
