@@ -1,24 +1,32 @@
 
 class Ovillo {
     const ubicacion
-    var activo = true
+    var activo = false
 
     method position() = ubicacion
 
-    method image() = "ovillo_juego.png"
+    method image() = "ovillo.png"
 
-    method verificarContacto() {
-        if (activo && game.onSameCell(gatito.position(), ubicacion)) {
-            activo = false
+    method configurar() {
+        activo = true
+        game.addVisual(self)
+    }
+
+    method desconfigurar() {
+        if (activo) {
             game.removeVisual(self)
-            controlMovimiento.congelar()
+            activo = false
         }
     }
 
-    method reiniciar() {
-        activo = true
+    method verificarContacto() {
+        if (activo && game.onSameCell(gatito.position(), ubicacion)) {
+            self.desconfigurar()
+            controlMovimiento.congelar()
+        }
     }
 }
+
 
 object gatitoCongelado {
     method position() = gatito.position() //Para que cambie la imagen dependiendo de la posicion donde se encuentra el gatito(asi podemos colocar el ovillo en distintas posiciones)
