@@ -29,38 +29,7 @@ class Ovillo {
     method verificarContacto() {
         if (activo && game.onSameCell(gatito.position(), ubicacion)) {
             self.desconfigurar()
-            estaCongelado.congelar()
-        }
-    }
-}
-
-object gatitoCongelado {
-    method position() = gatito.position()
-    method image() = "gatito_congelado.png"
-}
-
-object estaCongelado {
-    var congelado = false
-    method estaCongelado() = congelado
-
-    method congelar() {
-        if (!congelado) {
-            congelado = true
-
-            game.removeVisual(gatito)
-            game.addVisual(gatitoCongelado)
-
-            game.schedule(3000, {
-                self.descongelar()
-            })
-        }
-    }
-
-    method descongelar() {
-        if (congelado) {
-            game.removeVisual(gatitoCongelado)
-            game.addVisual(gatito)
-            congelado = false
+            gatito.congelar()
         }
     }
 }

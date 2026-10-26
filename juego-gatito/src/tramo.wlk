@@ -50,7 +50,7 @@ const tramo5Nivel1 = new TramoVertical (
 
 const tramo6Nivel1 = new TramoHorizontal (
     y = 35,
-    xInicial = 40,
+    xInicial = 71,
     xFinal = 99
 )
 
