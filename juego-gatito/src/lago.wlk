@@ -12,7 +12,9 @@ class Lago {
     }
 
     method desconfigurar() {
-        game.removeVisual(puente)
+        if (game.hasVisual(puente)) {
+            game.removeVisual(puente)
+        }
     }
 
     method esZonaPeligrosa(posicion) {
@@ -21,7 +23,7 @@ class Lago {
     }
     method afectarGatito() {
         if(self.esZonaPeligrosa(gatito.position()) && !puente.permiteCruzar(gatito.position())) {
-            game.say(gatito, "Perdí!!!!")
+            gatito.caerAlAgua()
         }
     }
 }

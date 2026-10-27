@@ -5,22 +5,65 @@ import juego.*
 object gatito {
     var ubicacion = game.origin()
     var congelado = false
+    const vidasMaximas = 3
+    var vidas = vidasMaximas
+    var orientacion = haciaLaDerecha
 
     method position() = ubicacion
 
-    method image() = "gatito.png"
+    method image() = orientacion.imagen()
+
+    method imagenCongelado() = orientacion.imagenCongelado()
 
     method estaCongelado() = congelado
 
+    method vidas() = vidas
+
+    method reiniciarVidas() {
+        vidas = vidasMaximas
+    }
+
+    // Nunca puede tener más de 3 vidas
+    method ganarVida() {
+        if (vidas < vidasMaximas) {
+            vidas += 1
+            juego.vidasCambiaron()
+        }
+    }
+
+    // Pierde una vida y vuelve al inicio del nivel; si no le quedan, pierde el juego
+    method caerAlAgua() {
+        vidas -= 1
+        juego.vidasCambiaron()
+        if (vidas <= 0) {
+            juego.gatitoSinVidas()
+        } else {
+            juego.volverAlInicioDelNivel()
+        }
+    }
+
+    // Al empezar un nivel siempre mira hacia la derecha
     method irA(posicionInicial) {
         ubicacion = posicionInicial
+        orientacion = haciaLaDerecha
     }
 
     method position(nuevaPosicion) {
-        if (!self.estaCongelado() && juego.esTransitable(nuevaPosicion)) {
+        if (juego.permiteMoverse() && !self.estaCongelado() && juego.esTransitable(nuevaPosicion)) {
+            self.mirarHacia(nuevaPosicion)
             ubicacion = nuevaPosicion
             juego.verificarMeta()
             juego.verificarObstaculos()
+        }
+    }
+
+    // Si camina hacia los costados se da vuelta; si sube o baja sigue mirando para donde miraba
+    method mirarHacia(nuevaPosicion) {
+        if (nuevaPosicion.x() < ubicacion.x()) {
+            orientacion = haciaLaIzquierda
+        }
+        if (nuevaPosicion.x() > ubicacion.x()) {
+            orientacion = haciaLaDerecha
         }
     }
 
@@ -49,6 +92,17 @@ object gatito {
 
 object gatitoCongelado {
     method position() = gatito.position()
-    method image() = "gatito_congelado.png"
+    method image() = gatito.imagenCongelado()
+}
+
+// Hacia dónde mira el gatito: cada una sabe qué imagen usar
+object haciaLaDerecha {
+    method imagen() = "gatito.png"
+    method imagenCongelado() = "gatito_congelado.png"
+}
+
+object haciaLaIzquierda {
+    method imagen() = "gatito_izquierda.png"
+    method imagenCongelado() = "gatito_congelado_izquierda.png"
 }
 

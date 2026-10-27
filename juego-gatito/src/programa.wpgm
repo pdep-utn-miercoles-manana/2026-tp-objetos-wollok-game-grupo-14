@@ -6,13 +6,15 @@ import nivel.*
 import ovillo.*
 import pescadito.*
 import puente.*
+import sonido.*
 import tramo.*
 // wollok run "src.juego.carreraDeGatitos" --port 4200 -p "." -a "assets"
 
 
 program carreraDeGatitos {
     game.width(100)
-    game.height(71)
+    // 71 filas para el mapa y 5 más arriba para la barra
+    game.height(76)
     game.cellSize(20)
     game.title("Carrera de gatitos")
 
