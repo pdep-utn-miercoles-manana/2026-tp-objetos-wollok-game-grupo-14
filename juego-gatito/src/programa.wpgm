@@ -20,12 +20,11 @@ program carreraDeGatitos {
 
     juego.iniciar()
 
-    
+    game.addVisualCharacter(gatito)
     game.onTick(1000, "moverPuente", {
         juego.moverPuentes()
     })
 
-    game.addVisual(gatito)
 
     // Movimiento hacia arriba
     keyboard.up().whilePressedDo({

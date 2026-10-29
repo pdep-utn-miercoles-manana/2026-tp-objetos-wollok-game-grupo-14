@@ -8,7 +8,7 @@ class Ovillo {
 
     method position() = ubicacion
 
-    method image() = "ovillo.png"
+    method image() = "ovilloNuevo.png"
 
     method configurar() {
         activo = true
@@ -35,5 +35,13 @@ class Ovillo {
 }
 
 const ovilloNivel1 = new Ovillo(
-    ubicacion = game.at(71, 21)
+    ubicacion = game.at(72, 22)
+)
+
+const ovilloNivel2 = new Ovillo(
+    ubicacion = game.at(45, 55)
+)
+
+const ovilloNivel3 = new Ovillo(
+    ubicacion = game.at(33, 42)
 )

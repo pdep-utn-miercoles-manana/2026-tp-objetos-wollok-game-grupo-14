@@ -83,7 +83,7 @@ object gatito {
     method descongelar() {
         if (congelado) {
             game.removeVisual(gatitoCongelado)
-            game.addVisual(self)
+            game.addVisualCharacter(self)
 
             congelado = false
         }
