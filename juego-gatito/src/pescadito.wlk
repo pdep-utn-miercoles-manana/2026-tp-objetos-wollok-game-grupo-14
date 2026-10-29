@@ -38,7 +38,7 @@ class Pescadito {
 
 // Nivel 1: después del lago de arriba (lago1Nivel1, x 51..61)
 const pescaditoNivel1 = new Pescadito(
-    ubicacion = game.at(72, 51)
+    ubicacion = game.at(71, 51)
 )
 
 // Nivel 2: en la esquina donde se juntan los dos caminos, después de cruzar dos lagos por cualquiera de ellos

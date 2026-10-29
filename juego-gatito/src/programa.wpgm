@@ -19,7 +19,7 @@ program carreraDeGatitos {
     game.title("Carrera de gatitos")
 
     juego.iniciar()
-
+    
     game.addVisualCharacter(gatito)
     game.onTick(1000, "moverPuente", {
         juego.moverPuentes()

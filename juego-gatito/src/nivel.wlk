@@ -28,6 +28,7 @@ class Nivel {
         completado = false
         self.ponerGatitoEnElInicio()
         self.configurarObstaculos()
+
     }
 
     method ponerGatitoEnElInicio() {

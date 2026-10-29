@@ -35,7 +35,7 @@ class Ovillo {
 }
 
 const ovilloNivel1 = new Ovillo(
-    ubicacion = game.at(72, 22)
+    ubicacion = game.at(71, 21)
 )
 
 const ovilloNivel2 = new Ovillo(
@@ -43,5 +43,5 @@ const ovilloNivel2 = new Ovillo(
 )
 
 const ovilloNivel3 = new Ovillo(
-    ubicacion = game.at(33, 42)
+    ubicacion = game.at(33, 41)
 )

@@ -1110,3 +1110,26 @@
 {"level":"info","message":"⌛ Validating juego-gatito/src/ovillo.wlk","timeElapsed":152,"timestamp":"2026-10-26T23:35:39.268Z"}
 {"level":"info","message":"⌛ Validating juego-gatito/src/tramo.wlk","timeElapsed":168,"timestamp":"2026-10-26T23:35:39.438Z"}
 {"error":["Error: Could not resolve reference to src.programa.carreraDeGatitos","  at Environment.getNodeByFQN (C:\\Users\\Melina\\AppData\\Roaming\\npm\\node_modules\\wollok-ts-cli\\node_modules\\wollok-ts\\dist\\model.js:723:19)","  at default (file:///C:/Users/Melina/AppData/Roaming/npm/node_modules/wollok-ts-cli/dist/src/commands/run.js:29:64"],"level":"info","message":"🚀 Program executed \u001b[3m\u001b[34msrc.programa.carreraDeGatitos\u001b[39m\u001b[23m on \u001b[3m\u001b[34mC:\\Users\\Melina\\Documents\\2026\\PdeP\\Tps\\2026-tp-objetos-wollok-game-grupo-14\u001b[39m\u001b[23m","ok":false,"timeElapsed":3198,"timestamp":"2026-10-27T17:51:50.306Z"}
+{"level":"info","message":"⌛ Building environment","timeElapsed":112,"timestamp":"2026-10-29T19:52:32.263Z"}
+{"level":"info","message":"⌛ Building environment","timeElapsed":135,"timestamp":"2026-10-29T19:52:32.401Z"}
+{"level":"info","message":"⌛ Building environment","timeElapsed":161,"timestamp":"2026-10-29T19:52:33.299Z"}
+{"level":"info","message":"⌛ Validating juego-gatito/src/pescadito.wlk","timeElapsed":110,"timestamp":"2026-10-29T19:52:33.746Z"}
+{"level":"info","message":"⌛ Validating juego-gatito/src/ovillo.wlk","timeElapsed":177,"timestamp":"2026-10-29T19:52:33.923Z"}
+{"level":"info","message":"⌛ Validating juego-gatito/src/nivel.wlk","timeElapsed":148,"timestamp":"2026-10-29T19:52:34.075Z"}
+{"level":"info","message":"⌛ Validating juego-gatito/src/lago.wlk","timeElapsed":116,"timestamp":"2026-10-29T19:52:34.192Z"}
+{"level":"info","message":"⌛ Validating juego-gatito/src/juego.wlk","timeElapsed":128,"timestamp":"2026-10-29T19:52:34.321Z"}
+{"level":"info","message":"⌛ Validating juego-gatito/src/programa.wpgm","timeElapsed":193,"timestamp":"2026-10-29T19:52:34.515Z"}
+{"level":"info","message":"⌛ Validating juego-gatito/src/tramo.wlk","timeElapsed":101,"timestamp":"2026-10-29T19:52:34.616Z"}
+{"level":"info","message":"⌛ Validating juego-gatito/src/pescadito.wlk","timeElapsed":105,"timestamp":"2026-10-29T19:52:34.871Z"}
+{"level":"info","message":"⌛ Validating juego-gatito/src/ovillo.wlk","timeElapsed":113,"timestamp":"2026-10-29T19:52:34.984Z"}
+{"level":"info","message":"⌛ Validating juego-gatito/src/nivel.wlk","timeElapsed":115,"timestamp":"2026-10-29T19:52:35.101Z"}
+{"level":"info","message":"⌛ Validating juego-gatito/src/lago.wlk","timeElapsed":132,"timestamp":"2026-10-29T19:52:35.234Z"}
+{"level":"info","message":"⌛ Building environment","timeElapsed":178,"timestamp":"2026-10-29T19:52:35.572Z"}
+{"level":"info","message":"⌛ Building environment","timeElapsed":188,"timestamp":"2026-10-29T19:52:35.761Z"}
+{"error":["Error: Could not resolve reference to src.programa.carreraDeGatitos","  at Environment.getNodeByFQN (C:\\Users\\sol\\AppData\\Roaming\\npm\\node_modules\\wollok-ts-cli\\node_modules\\wollok-ts\\dist\\model.js:723:19)","  at default (file:///C:/Users/sol/AppData/Roaming/npm/node_modules/wollok-ts-cli/dist/src/commands/run.js:29:64"],"level":"info","message":"🚀 Program executed \u001b[3m\u001b[34msrc.programa.carreraDeGatitos\u001b[39m\u001b[23m on \u001b[3m\u001b[34mC:\\Users\\sol\\2026-tp-objetos-wollok-game-grupo-14\u001b[39m\u001b[23m","ok":false,"timeElapsed":897,"timestamp":"2026-10-29T19:52:56.589Z"}
+{"level":"info","message":"⌛ Building environment","timeElapsed":147,"timestamp":"2026-10-29T19:55:39.992Z"}
+{"level":"info","message":"⌛ Validating juego-gatito/src/ovillo.wlk","timeElapsed":284,"timestamp":"2026-10-29T19:55:40.340Z"}
+{"level":"info","message":"⌛ Building environment","timeElapsed":116,"timestamp":"2026-10-29T19:56:58.279Z"}
+{"level":"info","message":"⌛ Validating juego-gatito/src/ovillo.wlk","timeElapsed":130,"timestamp":"2026-10-29T19:56:58.410Z"}
+{"level":"info","message":"⌛ Building environment","timeElapsed":151,"timestamp":"2026-10-29T19:57:00.562Z"}
+{"error":["Error: Could not resolve reference to src.programa.carreraDeGatitos","  at Environment.getNodeByFQN (C:\\Users\\sol\\AppData\\Roaming\\npm\\node_modules\\wollok-ts-cli\\node_modules\\wollok-ts\\dist\\model.js:723:19)","  at default (file:///C:/Users/sol/AppData/Roaming/npm/node_modules/wollok-ts-cli/dist/src/commands/run.js:29:64"],"level":"info","message":"🚀 Program executed \u001b[3m\u001b[34msrc.programa.carreraDeGatitos\u001b[39m\u001b[23m on \u001b[3m\u001b[34mC:\\Users\\sol\\2026-tp-objetos-wollok-game-grupo-14\u001b[39m\u001b[23m","ok":false,"timeElapsed":890,"timestamp":"2026-10-29T19:57:23.578Z"}
