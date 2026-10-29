@@ -18,6 +18,14 @@ object juego {
 
     method fondoDelNivel() = nivelActual.fondo()
 
+    method agregarGatitoAdelante() {
+        if(game.hasVisual(gatito)) {
+            game.removeVisual(gatito)
+        }
+        game.addVisualCharacter(gatito)
+    }
+
+
     // Se llama una sola vez, al arrancar el programa
     method iniciar() {
         estado = true
@@ -35,6 +43,7 @@ object juego {
     method iniciarNivel() {
         tiempoRestante = nivelActual.tiempoLimite()
         nivelActual.iniciar()
+        self.agregarGatitoAdelante()
     }
 
     method pasarUnSegundo() {
