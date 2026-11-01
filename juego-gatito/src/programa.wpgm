@@ -6,7 +6,6 @@ import nivel.*
 import ovillo.*
 import pescadito.*
 import puente.*
-import sonido.*
 import tramo.*
 // wollok run "src.juego.carreraDeGatitos" --port 4200 -p "." -a "assets"
 

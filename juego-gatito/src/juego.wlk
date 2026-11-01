@@ -1,6 +1,5 @@
 import nivel.*
 import gatito.*
-import sonido.*
 object juego {
     var nivelActual = nivel1
     var estado = true
@@ -18,11 +17,13 @@ object juego {
 
     method fondoDelNivel() = nivelActual.fondo()
 
+    // addVisual y no addVisualCharacter: las flechas ya mueven al gatito con whilePressedDo (en programa.wpgm).
+    // addVisualCharacter le agregaría otro movimiento por cada vez que se llama, y el gatito saltaría varias casillas.
     method agregarGatitoAdelante() {
         if(game.hasVisual(gatito)) {
             game.removeVisual(gatito)
         }
-        game.addVisualCharacter(gatito)
+        game.addVisual(gatito)
     }
 
 
@@ -34,7 +35,6 @@ object juego {
         game.addVisual(mapa)
         barraSuperior.mostrar()
         keyboard.r().onPressDo({ self.volverAJugar() })
-        keyboard.m().onPressDo({ sonido.alternar() })
         game.onTick(1000, "reloj", { self.pasarUnSegundo() })
         self.iniciarNivel()
     }
@@ -149,7 +149,7 @@ object mapa {
 // Los textos de Wollok se ven muy chicos, así que todo se dibuja con imágenes pixeladas
 
 object barraSuperior {
-    method position() = game.at(23, 71)
+    method position() = game.at(26, 71)
     method image() = "barra.png"
 
     method mostrar() {
@@ -157,23 +157,22 @@ object barraSuperior {
         game.addVisual(cifraDelNivel)
         game.addVisual(decenasDelTiempo)
         game.addVisual(unidadesDelTiempo)
-        game.addVisual(sonido)
         marcadorDeVidas.mostrar()
     }
 }
 
 object cifraDelNivel {
-    method position() = game.at(32, 72)
+    method position() = game.at(35, 72)
     method image() = "digito_" + juego.numeroDeNivel() + ".png"
 }
 
 object decenasDelTiempo {
-    method position() = game.at(66, 72)
+    method position() = game.at(69, 72)
     method image() = "decena_" + juego.tiempoRestante().div(10) + ".png"
 }
 
 object unidadesDelTiempo {
-    method position() = game.at(68, 72)
+    method position() = game.at(71, 72)
     method image() = "unidad_" + juego.tiempoRestante() % 10 + ".png"
 }
 
@@ -181,7 +180,7 @@ object unidadesDelTiempo {
 class Corazon {
     const numero
 
-    method position() = game.at(44 + (numero - 1) * 3, 72)
+    method position() = game.at(47 + (numero - 1) * 3, 72)
     method image() = "corazon.png"
 }
 

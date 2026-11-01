@@ -49,11 +49,14 @@ object gatito {
     }
 
     method position(nuevaPosicion) {
-        if (juego.permiteMoverse() && !self.estaCongelado() && juego.esTransitable(nuevaPosicion)) {
+        if (juego.permiteMoverse() && !self.estaCongelado()) {
+            // Se da vuelta hacia donde apretó el jugador, aunque no pueda avanzar para ese lado
             self.mirarHacia(nuevaPosicion)
-            ubicacion = nuevaPosicion
-            juego.verificarMeta()
-            juego.verificarObstaculos()
+            if (juego.esTransitable(nuevaPosicion)) {
+                ubicacion = nuevaPosicion
+                juego.verificarMeta()
+                juego.verificarObstaculos()
+            }
         }
     }
 
@@ -83,7 +86,7 @@ object gatito {
     method descongelar() {
         if (congelado) {
             game.removeVisual(gatitoCongelado)
-            game.addVisualCharacter(self)
+            game.addVisual(self)
 
             congelado = false
         }
