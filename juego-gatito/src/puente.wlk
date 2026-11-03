@@ -1,16 +1,17 @@
+import gatito.*
+
 class Puente {
     const posicionMinima
     const posicionMaxima
     var posicionMovil
     var avanzando = true
     const imagen
+    // Dónde estaba el puente cuando se subió el gatito (ahí el gatito estaba sobre el camino)
+    var posicionAlSubir = 0
+
     method mover() {
-        if(avanzando) {
-            posicionMovil+=1
-        }
-        else {
-            posicionMovil-=1
-        }
+        const paso = if (avanzando) 1 else -1
+        posicionMovil += paso
 
         if(posicionMovil >= posicionMaxima) {
             avanzando = false
@@ -18,12 +19,40 @@ class Puente {
         if(posicionMovil <= posicionMinima) {
             avanzando = true
         }
+
+        // Si el gatito está arriba, el puente lo lleva con él, esté donde esté parado
+        if (gatito.estaSobre(self)) {
+            gatito.serLlevadoA(self.siguientePosicion(gatito.position(), paso))
+        }
     }
+
+    method recibirAlGatito() {
+        posicionAlSubir = posicionMovil
+    }
+
+    // Si el puente todavía está en una posición en que deja cruzar, el gatito que sale por una punta
+    // baja directo al camino (aunque el puente lo haya corrido un poco); si no, se queda arriba
+    method bajadaHacia(destino) =
+        if (self.estaEnRangoDeCruce() && !self.sostiene(destino)) self.siguientePosicion(destino, posicionAlSubir - posicionMovil) else destino
+
+    method estaEnRangoDeCruce() = posicionMovil.between(self.inicioDelCruce(), self.finDelCruce())
+
+    method inicioDelCruce()
+    method finDelCruce()
 
     method image() = imagen
     method position() {}
     method position(nuevaPosicion) {}
     method permiteCruzar(posicion) {}
+
+    // Dónde queda algo que va arriba del puente cuando el puente avanza un paso
+    method siguientePosicion(posicion, paso)
+
+    // Si la casilla está sobre el puente, en el sentido en que se lo cruza
+    method sostiene(posicion)
+
+    // Arriba del puente se camina sólo a lo largo de él
+    method permiteCaminar(desde, hasta)
 }
 
 class PuenteVertical inherits Puente {
@@ -44,6 +73,18 @@ class PuenteVertical inherits Puente {
         return posicionGatito.x() >= extremoIzquierdoPuente && posicionGatito.x() <= extremoDerechoPuente
             && posicionMovil >= yInferiorCruce && posicionMovil <= ySuperiorCruce
     }
+
+    override method inicioDelCruce() = yInferiorCruce
+    override method finDelCruce() = ySuperiorCruce
+
+    // Sube y baja: lo que está arriba se mueve en vertical
+    override method siguientePosicion(posicion, paso) = game.at(posicion.x(), posicion.y() + paso)
+
+    override method sostiene(posicion) =
+        posicion.x() >= extremoIzquierdoPuente && posicion.x() <= extremoDerechoPuente
+
+    // Se cruza de izquierda a derecha, en la fila en la que está el gatito
+    override method permiteCaminar(desde, hasta) = self.sostiene(hasta) && hasta.y() == desde.y()
 }
 
 class PuenteHorizontal inherits Puente {
@@ -64,6 +105,18 @@ class PuenteHorizontal inherits Puente {
         return posicionGatito.y() >= extremoInferiorPuente && posicionGatito.y() <= extremoSuperiorPuente
             && posicionMovil >= xInferiorCruce && posicionMovil <= xSuperiorCruce
     }
+
+    override method inicioDelCruce() = xInferiorCruce
+    override method finDelCruce() = xSuperiorCruce
+
+    // Va y viene de costado: lo que está arriba se mueve en horizontal
+    override method siguientePosicion(posicion, paso) = game.at(posicion.x() + paso, posicion.y())
+
+    override method sostiene(posicion) =
+        posicion.y() >= extremoInferiorPuente && posicion.y() <= extremoSuperiorPuente
+
+    // Se cruza de abajo hacia arriba, en la columna en la que está el gatito
+    override method permiteCaminar(desde, hasta) = self.sostiene(hasta) && hasta.x() == desde.x()
 }
 
 const puente1Nivel1 = new PuenteVertical (
@@ -99,8 +152,8 @@ const puente1Nivel2 = new PuenteHorizontal (
     ejeY = 42,
     extremoSuperiorPuente = 48,
     extremoInferiorPuente = 38,
-    xInferiorCruce = 15,
-    xSuperiorCruce = 22 
+    xInferiorCruce = 17,
+    xSuperiorCruce = 19
 )
 
 const puente2Nivel2 = new PuenteVertical (
@@ -112,7 +165,7 @@ const puente2Nivel2 = new PuenteVertical (
     extremoIzquierdoPuente = 51,
     extremoDerechoPuente = 62,
     yInferiorCruce = 19,
-    ySuperiorCruce = 24
+    ySuperiorCruce = 21
 )
 
 const puente3Nivel2 = new PuenteVertical (
@@ -124,7 +177,7 @@ const puente3Nivel2 = new PuenteVertical (
     extremoIzquierdoPuente = 69,
     extremoDerechoPuente = 77,
     yInferiorCruce = 19,
-    ySuperiorCruce = 24
+    ySuperiorCruce = 21
 )
 
 const puente4Nivel2 = new PuenteVertical (
@@ -135,8 +188,9 @@ const puente4Nivel2 = new PuenteVertical (
     ejeX = 73,
     extremoIzquierdoPuente = 69,
     extremoDerechoPuente = 77,
-    yInferiorCruce = 50,
-    ySuperiorCruce = 59
+    // el camino está en la fila 55: el puente lo cubre cuando su base está entre 53 y 55 (igual que en el nivel 1)
+    yInferiorCruce = 53,
+    ySuperiorCruce = 55
 )
 
 const puente1Nivel3 = new PuenteVertical (
@@ -147,8 +201,8 @@ const puente1Nivel3 = new PuenteVertical (
     ejeX = 10,
     extremoIzquierdoPuente = 8,
     extremoDerechoPuente = 16,
-    yInferiorCruce = 47,
-    ySuperiorCruce = 54
+    yInferiorCruce = 49,
+    ySuperiorCruce = 51
 )
 
 const puente2Nivel3 = new PuenteVertical (
@@ -160,7 +214,7 @@ const puente2Nivel3 = new PuenteVertical (
     extremoIzquierdoPuente = 8,
     extremoDerechoPuente = 16,
     yInferiorCruce = 1,
-    ySuperiorCruce = 6
+    ySuperiorCruce = 3
 )
 
 const puente3Nivel3 = new PuenteVertical (
@@ -171,8 +225,8 @@ const puente3Nivel3 = new PuenteVertical (
     ejeX = 77,
     extremoIzquierdoPuente = 74,
     extremoDerechoPuente = 84,
-    yInferiorCruce = 60,
-    ySuperiorCruce = 66
+    yInferiorCruce = 61,
+    ySuperiorCruce = 63
 )
 
 const puente4Nivel3 = new PuenteVertical (
@@ -183,8 +237,8 @@ const puente4Nivel3 = new PuenteVertical (
     ejeX = 77,
     extremoIzquierdoPuente = 74,
     extremoDerechoPuente = 84,
-    yInferiorCruce = 49,
-    ySuperiorCruce = 53
+    yInferiorCruce = 50,
+    ySuperiorCruce = 52
 )
 
 const puente5Nivel3 = new PuenteVertical (
@@ -196,7 +250,7 @@ const puente5Nivel3 = new PuenteVertical (
     extremoIzquierdoPuente = 74,
     extremoDerechoPuente = 84,
     yInferiorCruce = 1,
-    ySuperiorCruce = 6
+    ySuperiorCruce = 3
 )
 
 const puente6Nivel3 = new PuenteHorizontal (
@@ -207,8 +261,8 @@ const puente6Nivel3 = new PuenteHorizontal (
     ejeY = 17,
     extremoSuperiorPuente = 21,
     extremoInferiorPuente = 14,
-    xInferiorCruce = 24,
-    xSuperiorCruce = 29
+    xInferiorCruce = 25,
+    xSuperiorCruce = 27
 )
 
 const puente7Nivel3 = new PuenteHorizontal (
@@ -219,6 +273,6 @@ const puente7Nivel3 = new PuenteHorizontal (
     ejeY = 17,
     extremoSuperiorPuente = 21,
     extremoInferiorPuente = 14,
-    xInferiorCruce = 35,
-    xSuperiorCruce = 41
+    xInferiorCruce = 36,
+    xSuperiorCruce = 38
 )

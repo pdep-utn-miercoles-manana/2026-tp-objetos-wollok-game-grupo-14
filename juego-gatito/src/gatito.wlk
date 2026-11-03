@@ -8,6 +8,8 @@ object gatito {
     const vidasMaximas = 3
     var vidas = vidasMaximas
     var orientacion = haciaLaDerecha
+    // El puente en el que está parado (ningunPuente si está en tierra)
+    var puente = ningunPuente
 
     method position() = ubicacion
 
@@ -56,18 +58,50 @@ object gatito {
     method irA(posicionInicial) {
         ubicacion = posicionInicial
         orientacion = haciaLaDerecha
+        puente = ningunPuente
     }
 
     method position(nuevaPosicion) {
         if (juego.permiteMoverse() && !self.estaCongelado()) {
             // Se da vuelta hacia donde apretó el jugador, aunque no pueda avanzar para ese lado
             self.mirarHacia(nuevaPosicion)
-            if (juego.esTransitable(nuevaPosicion)) {
-                ubicacion = nuevaPosicion
+            // Camina por el camino o, si está arriba de un puente, a lo largo del puente
+            const destino = self.destinoAlIrHacia(nuevaPosicion)
+            if (self.puedeIrA(destino)) {
+                ubicacion = destino
+                self.bajarseSiSalioDelPuente()
                 juego.verificarMeta()
                 juego.verificarObstaculos()
             }
         }
+    }
+
+    // ---------- Puentes ----------
+
+    method estaSobre(unPuente) = puente == unPuente
+
+    method subirA(unPuente) {
+        puente = unPuente
+        unPuente.recibirAlGatito()
+    }
+
+    // Arriba del puente sólo camina a lo largo de él; fuera del puente, por el camino
+    method puedeIrA(destino) =
+        puente.permiteCaminar(ubicacion, destino) || (!puente.sostiene(destino) && juego.esTransitable(destino))
+
+    // Al salir del puente por una punta, el puente le dice dónde baja
+    method destinoAlIrHacia(nuevaPosicion) =
+        if (puente.permiteCaminar(ubicacion, nuevaPosicion)) nuevaPosicion else puente.bajadaHacia(nuevaPosicion)
+
+    method bajarseSiSalioDelPuente() {
+        if (!puente.sostiene(ubicacion)) {
+            puente = ningunPuente
+        }
+    }
+
+    // El puente lo mueve con él, aunque esté congelado
+    method serLlevadoA(nuevaPosicion) {
+        ubicacion = nuevaPosicion
     }
 
     // Si camina hacia los costados se da vuelta; si sube o baja sigue mirando para donde miraba
@@ -106,6 +140,13 @@ object gatito {
 object gatitoCongelado {
     method position() = gatito.position()
     method image() = gatito.imagenCongelado()
+}
+
+// Cuando el gatito está en tierra: no lo sostiene ni lo deja caminar sobre él
+object ningunPuente {
+    method sostiene(posicion) = false
+    method permiteCaminar(desde, hasta) = false
+    method bajadaHacia(destino) = destino
 }
 
 // Hacia dónde mira el gatito: cada una sabe qué imagen usar

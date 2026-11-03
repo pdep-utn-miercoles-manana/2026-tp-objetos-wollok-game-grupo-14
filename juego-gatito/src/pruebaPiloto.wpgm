@@ -1,0 +1,43 @@
+import wollok.game.*
+import gatito.*
+import juego.*
+import nivel.*
+
+// Prueba piloto: el mismo juego, pero el tiempo no corre y con las teclas 1, 2 y 3
+// se salta directo a ese nivel (con 3 vidas). Sirve para probar los puentes con calma.
+// wollok run src.pruebaPiloto.pruebaPuentes
+program pruebaPuentes {
+    game.width(100)
+    game.height(76)
+    game.cellSize(20)
+    game.title("Carrera de gatitos - prueba piloto")
+
+    juego.activarModoPrueba()
+    juego.iniciar()
+
+    game.onTick(1000, "moverPuente", {
+        juego.moverPuentes()
+    })
+
+    keyboard.num1().onPressDo({ juego.empezarDesde(nivel1) })
+    keyboard.num2().onPressDo({ juego.empezarDesde(nivel2) })
+    keyboard.num3().onPressDo({ juego.empezarDesde(nivel3) })
+
+    keyboard.up().whilePressedDo({
+        gatito.position(gatito.position().up(1))
+    }, 100)
+
+    keyboard.down().whilePressedDo({
+        gatito.position(gatito.position().down(1))
+    }, 100)
+
+    keyboard.left().whilePressedDo({
+        gatito.position(gatito.position().left(1))
+    }, 100)
+
+    keyboard.right().whilePressedDo({
+        gatito.position(gatito.position().right(1))
+    }, 100)
+
+    game.start()
+}

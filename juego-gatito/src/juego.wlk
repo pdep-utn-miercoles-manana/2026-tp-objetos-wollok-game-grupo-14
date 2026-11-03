@@ -5,8 +5,14 @@ object juego {
     var estado = true
     var tiempoRestante = 0
     var cambiandoDeNivel = false
+    // En modo prueba (programa pruebaPiloto) el tiempo no corre
+    var modoPrueba = false
 
     method estaEnJuego() = estado
+
+    method activarModoPrueba() {
+        modoPrueba = true
+    }
 
     // Mientras cambia de nivel el gatito no se mueve, aunque se siga apretando la flecha
     method permiteMoverse() = estado && !cambiandoDeNivel
@@ -47,7 +53,7 @@ object juego {
     }
 
     method pasarUnSegundo() {
-        if (estado) {
+        if (estado && !modoPrueba) {
             tiempoRestante -= 1
             if (tiempoRestante <= 0) {
                 self.reiniciarDesdeElNivel1()
@@ -68,16 +74,21 @@ object juego {
     // Con la R, una vez que ganó o perdió, vuelve a jugar desde el nivel 1
     method volverAJugar() {
         if (!estado) {
-            cartelFinal.ocultar()
-            estado = true
             self.reiniciarDesdeElNivel1()
         }
     }
 
     // Si se acaba el tiempo vuelve a empezar todo desde el nivel 1, con las 3 vidas
     method reiniciarDesdeElNivel1() {
+        self.empezarDesde(nivel1)
+    }
+
+    // Empieza en el nivel indicado con las 3 vidas (en la prueba piloto se usa con las teclas 1, 2 y 3)
+    method empezarDesde(nivel) {
+        cartelFinal.ocultar()
+        estado = true
         nivelActual.desconfigurarObstaculos()
-        nivelActual = nivel1
+        nivelActual = nivel
         gatito.reiniciarVidas()
         self.vidasCambiaron()
         self.empezarNivelConPausa()

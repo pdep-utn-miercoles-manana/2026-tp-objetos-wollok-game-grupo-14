@@ -21,9 +21,15 @@ class Lago {
         return posicion.x() >= xInicio && posicion.x() <= xFin
             && posicion.y() >= yInicio && posicion.y() <= yFin
     }
+    // Si pisa el agua: con el puente en su lugar se sube a él, si no se cae.
+    // Arriba del puente ya no corre peligro: el puente lo lleva.
     method afectarGatito() {
-        if(self.esZonaPeligrosa(gatito.position()) && !puente.permiteCruzar(gatito.position())) {
-            gatito.caerAlAgua()
+        if(self.esZonaPeligrosa(gatito.position()) && !gatito.estaSobre(puente)) {
+            if (puente.permiteCruzar(gatito.position())) {
+                gatito.subirA(puente)
+            } else {
+                gatito.caerAlAgua()
+            }
         }
     }
 }
