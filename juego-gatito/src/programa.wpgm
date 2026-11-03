@@ -1,3 +1,4 @@
+
 import wollok.game.*
 import gatito.*
 import juego.*
@@ -9,7 +10,6 @@ import puente.*
 import tramo.*
 // wollok run "src.juego.carreraDeGatitos" --port 4200 -p "." -a "assets"
 
-
 program carreraDeGatitos {
     game.width(100)
     // 71 filas para el mapa y 5 más arriba para la barra
@@ -17,12 +17,20 @@ program carreraDeGatitos {
     game.cellSize(20)
     game.title("Carrera de gatitos")
 
-    juego.iniciar()
-    
-    game.onTick(1000, "moverPuente", {
-        juego.moverPuentes()
+    // Mostrar la pantalla de inicio
+    game.boardGround("pantalla_inicio.png")
+
+    // Al presionar ESPACIO comienza el juego
+    keyboard.space().onPressDo({
+        juego.iniciarDesdePantalla()
     })
 
+    // Los puentes se mueven solamente si comenzó el juego
+    game.onTick(1000, "moverPuente", {
+        if (juego.estaEnJuego()) {
+            juego.moverPuentes()
+        }
+    })
 
     // Movimiento hacia arriba
     keyboard.up().whilePressedDo({

@@ -1,18 +1,21 @@
 import nivel.*
 import gatito.*
+
 object juego {
     var nivelActual = nivel1
-    var estado = true
+    var estado = false
     var tiempoRestante = 0
     var cambiandoDeNivel = false
+    var iniciado = false
+
     // En modo prueba (programa pruebaPiloto) el tiempo no corre
     var modoPrueba = false
-
-    method estaEnJuego() = estado
 
     method activarModoPrueba() {
         modoPrueba = true
     }
+
+    method estaEnJuego() = estado
 
     // Mientras cambia de nivel el gatito no se mueve, aunque se siga apretando la flecha
     method permiteMoverse() = estado && !cambiandoDeNivel
@@ -30,6 +33,15 @@ object juego {
             game.removeVisual(gatito)
         }
         game.addVisual(gatito)
+    }
+
+
+    // Inicia el juego al presionar ESPACIO por primera vez
+    method iniciarDesdePantalla() {
+    if (!iniciado) {
+        iniciado = true
+        self.iniciar()
+    }
     }
 
 
