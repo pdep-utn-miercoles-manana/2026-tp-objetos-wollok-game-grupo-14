@@ -11,7 +11,17 @@ object gatito {
 
     method position() = ubicacion
 
-    method image() = orientacion.imagen()
+    
+    method image() {
+    if (vidas == 3) {
+        return orientacion.imagenArmaduraCompleta()
+    } else if (vidas == 2) {
+        return orientacion.imagenPechera()
+    } else {
+        return orientacion.imagen()
+    }
+    }
+
 
     method imagenCongelado() = orientacion.imagenCongelado()
 
@@ -99,13 +109,20 @@ object gatitoCongelado {
 }
 
 // Hacia dónde mira el gatito: cada una sabe qué imagen usar
+
+
 object haciaLaDerecha {
     method imagen() = "gatito.png"
     method imagenCongelado() = "gatito_congelado.png"
+    method imagenPechera() = "gatito_pechera.png"
+    method imagenArmaduraCompleta() = "gatito_gladiador.png"
 }
 
 object haciaLaIzquierda {
     method imagen() = "gatito_izquierda.png"
     method imagenCongelado() = "gatito_congelado_izquierda.png"
+    method imagenPechera() = "gatito_pechera_izquierda.png"
+    method imagenArmaduraCompleta() = "gatito_gladiador_izquierda.png"
 }
+
 
